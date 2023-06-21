@@ -9,7 +9,6 @@ from models.ModelUser import ModelUser
 from models.entities.User import User
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'B!1w8NAt1T^%kvhUI*S^'
 csrf = CSRFProtect(app)
 db = MySQL(app)
 login_manager_app = LoginManager(app)
