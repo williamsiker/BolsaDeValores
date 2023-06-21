@@ -1,4 +1,7 @@
-class DevelopmentConfig():
+class Config:
+    SECRET_KEY = 'B!1w8NAt1T^%kvhUI*S^'
+
+class DevelopmentConfig(Config):
     DEBUG = True
     MYSQL_HOST = 'bxk4cskcwqztbxam1yvk-mysql.services.clever-cloud.com'
     MYSQL_USER = 'u7mh57g1lixv0lo1'
