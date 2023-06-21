@@ -38,7 +38,7 @@ def simulate():
         sell_messages = stock_data[stock_data['Signal'] == 'SELL'].apply(lambda row: f"FECHA DE VENTA: {row['Date']} - Precio: {row['Close']} - Intercambios: {row['Shares']} - Valor de Venta : {row['Portfolio Value']}", axis=1).tolist()
         return render_template('home.html', buy_messages=buy_messages, sell_messages=sell_messages)
     else:
-        return render_template('home.htlm')
+        return render_template('home.html')
 
 @app.route("/")
 def index():
@@ -68,7 +68,7 @@ def login():
     else:
         csrf_token = generate_csrf()
         session['csrf_token'] = csrf_token
-        return render_template('auth/login.html',csrf_token)
+        return render_template('auth/login.html',csrf_token=csrf_token)
 
 @app.route("/logout")
 def logout():
