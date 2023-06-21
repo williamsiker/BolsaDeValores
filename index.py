@@ -66,8 +66,10 @@ def login():
             flash("Usuario Invalido")
             return render_template('auth/login.html')
     else:
-        csrf_token = generate_csrf()
-        session['csrf_token'] = csrf_token
+        csrf_token = session.get('csrf_token')
+        if not csrf_token:
+            csrf_token = generate_csrf()
+            session['csrf_token'] = csrf_token
         return render_template('auth/login.html',csrf_token=csrf_token)
 
 @app.route("/logout")
