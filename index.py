@@ -9,7 +9,7 @@ from models.ModelUser import ModelUser
 from models.entities.User import User
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'B!1w8NAt1T^%kvhUI*S^'
+#app.config['SECRET_KEY'] = 'B!1w8NAt1T^%kvhUI*S^'
 csrf = CSRFProtect(app)
 db = MySQL(app)
 login_manager_app = LoginManager(app)
@@ -48,11 +48,6 @@ def index():
 def login():
     if request.method == "POST":
         # print(request.form['username'])
-        csrf_token = session.get('csrf_token')
-        if not validate_csrf(csrf_token, secret_key=app.config['SECRET_KEY']):
-            flash('Token CSRF inválido')
-            return render_template('auth/login.html')
-            
         user = User(0, request.form['username'], request.form['password'])
         logged_user = ModelUser.login(db, user)
         if logged_user != None:
@@ -66,11 +61,8 @@ def login():
             flash("Usuario Invalido")
             return render_template('auth/login.html')
     else:
-        csrf_token = session.get('csrf_token')
-        if not csrf_token:
-            csrf_token = generate_csrf()
-            session['csrf_token'] = csrf_token
-        return render_template('auth/login.html',csrf_token=csrf_token)
+        return render_template('auth/login.html')
+                
 
 @app.route("/logout")
 def logout():
@@ -90,7 +82,7 @@ def status_404(error):
 
 if __name__ == "__main__":
     app.config.from_object(config['development'])
-    csrf.init_app(app)
+    #csrf.init_app(app)
     app.register_error_handler(401, status_401)
     app.register_error_handler(404, status_404)
     app.run(debug=False,host='0.0.0.0') #debug=False,host='0.0.0.0'
