@@ -11,3 +11,4 @@ pandas==2.0.2
 pandas_ta==0.3.14b0
 requests==2.31.0
 matplotlib==3.7.1
+gunicorn==19.7.1
