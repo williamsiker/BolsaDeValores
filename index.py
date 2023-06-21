@@ -9,7 +9,7 @@ from models.ModelUser import ModelUser
 from models.entities.User import User
 
 app = Flask(__name__)
-#app.config['SECRET_KEY'] = 'B!1w8NAt1T^%kvhUI*S^'
+app.config['SECRET_KEY'] = 'B!1w8NAt1T^%kvhUI*S^'
 csrf = CSRFProtect(app)
 db = MySQL(app)
 login_manager_app = LoginManager(app)
@@ -38,11 +38,12 @@ def simulate():
         sell_messages = stock_data[stock_data['Signal'] == 'SELL'].apply(lambda row: f"FECHA DE VENTA: {row['Date']} - Precio: {row['Close']} - Intercambios: {row['Shares']} - Valor de Venta : {row['Portfolio Value']}", axis=1).tolist()
         return render_template('home.html', buy_messages=buy_messages, sell_messages=sell_messages)
     else:
-        return render_template('home.html')
+        return render_template('home.htlm')
 
 @app.route("/")
 def index():
     return redirect(url_for('login'))
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -61,8 +62,8 @@ def login():
             flash("Usuario Invalido")
             return render_template('auth/login.html')
     else:
-        return render_template('auth/login.html')
-                
+        return render_template('auth/login.html') 
+
 
 @app.route("/logout")
 def logout():
