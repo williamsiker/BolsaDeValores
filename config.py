@@ -1,4 +1,4 @@
-class DevelopmentConfig(Config):
+class DevelopmentConfig():
     DEBUG = True
     MYSQL_HOST = 'bxk4cskcwqztbxam1yvk-mysql.services.clever-cloud.com'
     MYSQL_USER = 'u7mh57g1lixv0lo1'
