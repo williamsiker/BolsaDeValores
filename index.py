@@ -9,6 +9,7 @@ from models.ModelUser import ModelUser
 from models.entities.User import User
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'B!1w8NAt1T^%kvhUI*S^'
 csrf = CSRFProtect(app)
 db = MySQL(app)
 login_manager_app = LoginManager(app)
@@ -48,6 +49,10 @@ def login():
     if request.method == "POST":
         # print(request.form['username'])
         csrf_token = session.get('csrf_token')
+        if not validate_csrf(csrf_token, secret_key=app.config['SECRET_KEY']):
+            flash('Token CSRF inválido')
+            return render_template('auth/login.html')
+            
         user = User(0, request.form['username'], request.form['password'])
         logged_user = ModelUser.login(db, user)
         if logged_user != None:
