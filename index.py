@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect,generate_csrf, validate_csrf
 from config import config
 from api import get_stock_data, calculate_technical_indicators, simulate_trading, plot_stock_data
 
@@ -47,6 +47,7 @@ def index():
 def login():
     if request.method == "POST":
         # print(request.form['username'])
+        csrf_token = session.get('csrf_token')
         user = User(0, request.form['username'], request.form['password'])
         logged_user = ModelUser.login(db, user)
         if logged_user != None:
@@ -60,7 +61,9 @@ def login():
             flash("Usuario Invalido")
             return render_template('auth/login.html')
     else:
-        return render_template('auth/login.html')
+        csrf_token = generate_csrf()
+        session['csrf_token'] = csrf_token
+        return render_template('auth/login.html',csrf_token)
 
 @app.route("/logout")
 def logout():
